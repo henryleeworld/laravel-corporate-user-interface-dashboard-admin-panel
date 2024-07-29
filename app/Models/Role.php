@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
@@ -11,12 +12,11 @@ class Role extends Model
 
     public $table = 'roles';
 
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'title',
         'created_at',
@@ -24,13 +24,33 @@ class Role extends Model
         'deleted_at',
     ];
 
-    public function users()
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+            'deleted_at' => 'datetime',
+        ];
+    }
+
+    /**
+     * The users that belong to the role.
+     */
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
 
     }
 
-    public function permissions()
+    /**
+     * The permissions that belong to the role.
+     */
+    public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(Permission::class);
 

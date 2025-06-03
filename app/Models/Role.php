@@ -15,13 +15,10 @@ class Role extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'title',
-        'created_at',
-        'updated_at',
-        'deleted_at',
     ];
 
     /**
